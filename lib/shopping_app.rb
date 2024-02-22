@@ -1,6 +1,8 @@
+require_relative "shopping_app/ownable"
 require_relative "shopping_app/seller"
 require_relative "shopping_app/item"
 require_relative "shopping_app/customer"
+
 
 seller = Seller.new("DICストア")
 10.times{ Item.new("CPU", 40830, seller) }
@@ -28,6 +30,7 @@ while !end_shopping do
 
   puts "️️⛏ 商品番号を入力してください"
   number = gets.to_i
+  
 
   puts "⛏ 商品数量を入力してください"
   quantity = gets.to_i

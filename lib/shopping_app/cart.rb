@@ -1,4 +1,5 @@
 require_relative "item_manager"
+require_relative "ownable"
 
 class Cart
   include Ownable
@@ -26,17 +27,17 @@ class Cart
   def check_out
     return if owner.wallet.balance < total_amount
    # ## 要件
-    @items.each do |item|
-     item_owner_wallet = item.owner.wallet
-     self_owner_wallet = self.owner.wallet
    #   - カートの中身（Cart#items）のすべてのアイテムの購入金額が、カートのオーナーのウォレットからアイテムのオーナーのウォレットに移されること。
-     self_owner_wallet.withdraw(item.price)
-     item_owner_wallet.deposit(item.price)
+   self.owner.wallet.withdraw(total_amount)
+   seller = @items[0].owner
+   seller.wallet.deposit(total_amount)
    #   - カートの中身（Cart#items）のすべてのアイテムのオーナー権限が、カートのオーナーに移されること。
-     item.owner = self.owner
+   customer = self.owner
+    @items.map do |item|
+      item.owner = customer
     end
    #   - カートの中身（Cart#items）が空になること。
-   @items = []
+    @items = []
    # ## ヒント
    #   - カートのオーナーのウォレット ==> self.owner.wallet
    #   - アイテムのオーナーのウォレット ==> item.owner.wallet

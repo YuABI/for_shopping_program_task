@@ -33,11 +33,11 @@ class Cart
    seller.wallet.deposit(total_amount)
    #   - カートの中身（Cart#items）のすべてのアイテムのオーナー権限が、カートのオーナーに移されること。
    customer = self.owner
-    @items.map do |item|
+   @items.each do |item|
       item.owner = customer
-    end
+   end
    #   - カートの中身（Cart#items）が空になること。
-    @items = []
+   @items.clear
    # ## ヒント
    #   - カートのオーナーのウォレット ==> self.owner.wallet
    #   - アイテムのオーナーのウォレット ==> item.owner.wallet
